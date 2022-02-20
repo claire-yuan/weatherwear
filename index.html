@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>replit</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+        <link href="style.css" rel="stylesheet" type="text/css">
+
+    </head>
+
+    <body>
+
+    <div id="initial">
+        <div id="initial-header" class="text-center">
+            <h1 class="heading display-2">WeatherWear</h1>
+            <h4>Welcome to WeatherWear,</h4> 
+            <h4>where we help you decide what to wear!</h4> 
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
+            <form id="form">
+                <div class="form-group">
+                    <label for="name">NAME</label>
+                    <input id="name" class="form-field" type="text" placeholder="Athena">
+                </div>
+                
+                <div class="form-group">
+                    <label for="zipcode">ZIP CODE</label>
+                    <input id="zipcode" class="form-field" type="text" placeholder="90007">
+                </div>
+
+                <div id="error-msg"></div>
+
+                <div class="text-center">
+                    <button type="submit">Ok!</button>  
+                </div>  
+            </form>
+        </div>
+    </div> <!--#initial-->
+
+    <div id="main">
+        <div id="main-header">
+            <h2 class="display-4">Hi <span id="name-display"></span>,</h2>
+            <h2 class="display-4"> it's <span id="temperature"></span>°F where you're at (<span id="user-zipcode"></span >)!</h2>
+
+
+            <div class="row">
+                <div>
+                    <h4 id="host-msg">Here are some weather-appropriate clothes we've curated for you!</h4>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div id="accessories" class="col-lg-3 col-md-6 text-center">
+                    <img src="https://media.everlane.com/image/upload/c_fill,dpr_3.0,f_auto,g_face,q_auto,w_auto:100:1200/v1/i/6a511d3d_ebea.jpg" class="img-fluid">
+                </div>
+                <div id="pants" class="col-lg-3 col-md-6 text-center">
+                    <img src="https://media.everlane.com/image/upload/c_fill,dpr_3.0,f_auto,g_face,q_auto,w_auto:100:1200/v1/i/fd3eb691_143a.jpg" class="img-fluid">
+                </div>
+                <div id="shirts" class="col-lg-3 col-md-6 text-center">
+                    <img src="https://media.everlane.com/image/upload/c_fill,dpr_3.0,f_auto,g_face,h_422,q_auto,w_auto:26:338/v1/i/2603b4f5_494d.jpg" class="img-fluid">
+                </div>
+                <div id="shoes" class="col-lg-3 col-md-6 text-center">
+                    <img src="https://media.everlane.com/image/upload/c_fill,dpr_3.0,f_auto,g_face,q_auto,w_auto:100:1200/v1/i/a1e0f647_bb20.jpg" class="img-fluid">
+                </div>
+            </div>
+        </div>
+
+        <div class="row btn-row">
+            <div class="col-6 text-center">
+                <button id="random">Gimme Something Else</button> 
+            </div>
+            <div class="col-6 text-center">
+                <button onclick="showForm()">Change My Location</button>
+            </div>
+        </div>
+        
+    </div> <!--#main-->
+
+
+    <script src="main.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
+        import { getDatabase, ref, set, child, onValue} from "https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js";
+        import {getDoc} from "https://www.gstatic.com/firebasejs/9.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDTQ0Dn4DRz6RGco7dv7f3e16y9PUzHMiA",
+            authDomain: "hackathon-f56a6.firebaseapp.com",
+            databaseURL: "https://hackathon-f56a6-default-rtdb.firebaseio.com",
+            projectId: "hackathon-f56a6",
+            storageBucket: "hackathon-f56a6.appspot.com",
+            messagingSenderId: "204378715760",
+            appId: "1:204378715760:web:b33591164be45efb42a6b5",
+            measurementId: "G-DW3EWT7CYZ"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const clothes = ref(db)
+        onValue(clothes, (snapshot)=>{
+            const data = snapshot.val();
+
+            document.querySelector("#random").onclick = function(){
+                let idx = randNum();
+                let temp = getTempRange(document.querySelector("#temperature").innerHTML);
+
+                document.querySelector("#accessories").childNodes[1].src =  data.accessories[temp][idx];
+                document.querySelector("#pants").childNodes[1].src =  data.pants[temp][idx];
+                document.querySelector("#shirts").childNodes[1].src =  data.shirts[temp][idx];
+                document.querySelector("#shoes").childNodes[1].src =  data.shoes[temp][idx];
+            }
+
+            document.querySelector("#submit").onclick = function(){
+                let idx = randNum();
+                let temp = getTempRange(document.querySelector("#temperature").innerHTML);
+
+                document.querySelector("#accessories").childNodes[1].src =  data.accessories[temp][idx];
+                document.querySelector("#pants").childNodes[1].src =  data.pants[temp][idx];
+                document.querySelector("#shirts").childNodes[1].src =  data.shirts[temp][idx];
+                document.querySelector("#shoes").childNodes[1].src =  data.shoes[temp][idx];
+            }
+        })
+
+        
+        
+
+      </script>
+
+    </body>
+</html>

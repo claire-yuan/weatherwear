@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    background-color: linen;
+}
+#initial {
+    padding-bottom: 2em;
+}
+#initial-header {
+    padding: 3em;
+}
+h1 {
+    margin-bottom: 20px;
+    margin-top: 30px;
+    font-family: 'Pacifico', cursive;
+    color:#D56D6D
+}
+h4 {
+    font-weight: normal;
+    font-size: 18px;
+    color: #888;
+}
+form {
+    padding: 3em;
+}
+#form label {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #D56D6D;
+}
+.form-group {
+    margin-bottom: 3em;
+}
+.form-field {
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid rgba(128, 128, 128, 0.158);
+    outline: 0;
+    padding: 0.2em 0em;
+    color: black;
+    font-size: 1.5rem;
+    background: transparent;
+}
+.form-field:focus {
+    border-color: #D56D6D;
+}
+button {
+    background-color: #fff;
+    padding: 0.5em 1.5em;
+    margin-top: 2em;
+    border: 0px solid #fff;
+    border-radius: 50px;
+    color:#D56D6D;
+    font-weight: bold;
+}
+button:hover {
+    background-color: #D56D6D;
+    color: white;
+}
+
+#main {
+    padding-bottom: 2em;
+    background-color: #DDD;
+}
+#main-header {
+    padding: 3em 3em 1em 3em;
+    margin-bottom: 2em;
+}
+#main img {
+    border-radius: 2em;
+    object-fit: cover;
+    margin-top: 30px;
+    aspect-ratio: 1 / 1;
+}
+input[type="radio"] {
+    accent-color: #d5776d;
+}
+.btn-row {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+.display-4 {
+    font-size: 5em;
+}
+#name-display, #temperature{
+    color:#6d97d5;
+}
+#host-msg{
+    margin-top: 20px;
+    margin-left: 20px;
+    font-size: 24px;
+}
+#error-msg {
+    color: #888;
+    text-align: center;
+}
+
+@media (max-width:998px) {
+    .display-2 {
+        font-size: 6em;
+     }
+}
+@media(max-width:768px) {
+    .display-2 {
+       font-size: 5em;
+    }
+}
